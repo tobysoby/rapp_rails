@@ -1,0 +1,26 @@
+/*.fc-header {
+    display: none;
+}*/
+
+.fc-day-header {
+    display: none;
+}
+
+.fc th {
+    border-style: none;
+}
+
+.fc td {
+    border-style: none;
+    background: #EDF2F4;
+}
+
+.fc-unthemed .fc-today {
+    background: #C5D5D9;
+}
+
+.fc-toolbar h2 {
+    font-size: 16px;
+    margin-left: auto;
+    margin-right: auto;
+}

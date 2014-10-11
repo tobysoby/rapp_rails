@@ -1,0 +1,31 @@
+#map {
+    height: 300px;
+    width: 400px;
+    /*float: left;*/
+}
+
+#calendar {
+    height: 600px;
+}
+
+body {
+    font-family: sans-serif;
+}
+
+.chart rect {
+  fill: #E6521E;
+}
+
+.chart text {
+  fill: white;
+  font: 10px sans-serif;
+  text-anchor: end;
+}
+    
+div.bar {
+    display: inline-block;
+    width: 20px;
+    height: 75px;	/* Gets overriden by D3-assigned height below */
+    margin-right: 2px;
+    background-color: #E6521E;
+}
