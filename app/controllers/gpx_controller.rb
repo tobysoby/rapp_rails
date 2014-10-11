@@ -3,8 +3,15 @@ class GpxController < ApplicationController
     end
     
     def create
-        parse(params[:file])
-        render html: "<strong>Done!</strong> <a href='/runs'>Show all Runs.</a>".html_safe
+        parse_result = parse(params[:file])
+        session[:time] = parse_result[:time]
+        session[:distance] = parse_result[:distance]
+        session[:duration] = parse_result[:duration]
+        session[:velocity_average] = parse_result[:velocity_average]
+        session[:pace_average] = parse_result[:pace_average]
+        session[:points] = parse_result[:points]
+        redirect_to controller: "runs" , action: "new"
+        #render html: "<strong>Done!</strong> <a href='/runs'>Show all Runs.</a>".html_safe
     end
 
     def dateUmsetzung (date)
@@ -93,7 +100,8 @@ class GpxController < ApplicationController
         
 #date_umgesetzt[2] + date_umgesetzt[1] + date_umgesetzt[0] - , :time => date_umgesetzt[3]
 
-        Run.create({:time => time, :distance => distance, :duration => time_difference, :velocity_average => gesch_durchschnitt, :pace_average => pace_durchschnitt, :points => points})
+        #Run.create({:time => time, :distance => distance, :duration => time_difference, :velocity_average => gesch_durchschnitt, :pace_average => pace_durchschnitt, :points => points})
+        return {:time => time, :distance => distance, :duration => time_difference, :velocity_average => gesch_durchschnitt, :pace_average => pace_durchschnitt, :points => points}
         
     end
     

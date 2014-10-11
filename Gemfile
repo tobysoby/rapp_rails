@@ -41,3 +41,5 @@ gem 'spring',        group: :development
 gem 'nokogiri'
 gem 'carrierwave'
 
+gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
+

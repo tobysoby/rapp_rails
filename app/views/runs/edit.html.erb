@@ -1,0 +1,19 @@
+<div class="row">
+<script src="../../js/edit.js"></script>
+  <div class="col-md-4">
+  <div><%= form_for @run do |f| %></div>
+  <div><%= f.label :time %><%= f.text_field :time, :value => @run.time, class: "time_input" %></div>
+  <div><%= f.label :distance %><%= f.text_field :distance, :value => @run.distance, class: "distance_input" %></div>
+  <div><%= f.label :duration %><%= f.text_field :duration, :value => @run.duration, class: "duration_input" %></div>
+  <div><%= f.label :velocity_average, "Velocity" %><%= f.text_field :velocity_average, :value => @run.velocity_average, class: "velocity_input" %></div>
+  <div><%= f.label :pace_average, "Pace" %><%= f.text_field :pace_average, :value => @run.pace_average, class: "pace_input" %></div>
+  <div><%= f.label :note%><%= f.text_field :note%></div>
+  <div><%= f.label :feeling%><%= f.text_field :feeling%></div>
+  <%= f.submit "Edit Run" %>
+  <% end %>
+  <%= button_to "delete", @run, :method=>:delete, :class=>:destroy %>
+  </div>
+  
+  <div class="col-md-1"></div>
+  <div class="col-md-5"><div id='map'><script type="text/javascript">initmap(<%=@run.points%>);</script></div></div>
+</div>

@@ -1,6 +1,7 @@
 <div class="row">
     <div class="col-md-4">
  <h4>Your run on <span id='last_date'><%= Time.parse(@run.time).strftime("%d.%m.%y, beginning at %k:%M") %></span>:</h4> You ran a distance of <b><span id='last_distance'><%= (@run.distance.to_f / 1000).round(2).to_s %></span> km.</b> in <b><span id='last_length'><%= @run.duration.to_f.round(2).to_s %></span> min.</b> That makes for an average speed of <b><span id='last_geschdurchschnitt'><%= @run.velocity_average.to_f.round(2).to_s %></span> km/h</b> and an average pace of <b><span id='last_pacedurchschnitt'><%= @run.pace_average.to_f.round(2).to_s %></span> min/km.</b><br/><br/>
+ <%= link_to "Edit Run", controller: "runs", action: "edit", id: @run %>
     </div>
 
     <div class="col-md-3"></div>

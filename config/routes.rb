@@ -58,7 +58,7 @@ Rails.application.routes.draw do
 
     resources :runs
 
-    get 'gpx/new' => 'gpx#new'
+    get 'gpx' => 'gpx#new'
     post 'gpx' => 'gpx#create'
     #get 'gpx/create' => 'runs#index'
 
