@@ -43,3 +43,4 @@ gem 'carrierwave'
 
 gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
 
+gem 'bcrypt-ruby', '3.1.2'
