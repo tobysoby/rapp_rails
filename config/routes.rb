@@ -56,6 +56,11 @@ Rails.application.routes.draw do
 
     root "runs#index"
 
+    resources :users
+    match '/signup',  to: 'users#new',            via: 'get'
+
+    
+
     resources :runs
 
     get 'gpx' => 'gpx#new'
