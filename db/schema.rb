@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141103133944) do
+ActiveRecord::Schema.define(version: 20141104141237) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "runs", force: true do |t|
     t.datetime "datetime"
@@ -19,7 +22,7 @@ ActiveRecord::Schema.define(version: 20141103133944) do
     t.float    "duration"
     t.float    "velocity_average"
     t.float    "pace_average"
-    t.string   "points"
+    t.text     "points"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "point_time"
@@ -35,8 +38,8 @@ ActiveRecord::Schema.define(version: 20141103133944) do
     t.datetime "updated_at"
   end
 
-  add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true
-  add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at"
+  add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true, using: :btree
+  add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
 
   create_table "tracks", force: true do |t|
     t.string   "name"
@@ -56,6 +59,6 @@ ActiveRecord::Schema.define(version: 20141103133944) do
     t.string   "remember_token"
   end
 
-  add_index "users", ["remember_token"], name: "index_users_on_remember_token"
+  add_index "users", ["remember_token"], name: "index_users_on_remember_token", using: :btree
 
 end
