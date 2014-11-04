@@ -1,50 +1,40 @@
-<div class="row">
-    <% if @last_run[0] %>
-    <div class="col-md-4">
-        <h4>Your last run:</h4>
- On <b><span id='last_date'><%= @last_run[0].datetime.strftime("%d.%m.%y, beginning at %k:%M") %></span></b>, you ran a distance of <b><span id='last_distance'><%= (@last_run[0].distance.to_f / 1000).round(2).to_s %></span> km.</b> in <b><span id='last_length'><%= @last_run[0].duration.to_f.round(2).to_s %></span> min.</b> That makes for an average speed of <b><span id='last_geschdurchschnitt'><%= @last_run[0].velocity_average.to_f.round(2).to_s %></span> km/h</b> and an average pace of <b><span id='last_pacedurchschnitt'><%= @last_run[0].pace_average.to_f.round(2).to_s %></span> min/km.</b><br/><br/>
+<h4>Hey <%= current_user.name %>, your runs:</h4>
+
+<%- Date.today.downto(Date.today - 31.days) do |date| %>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-2">
+            <span style="font-size: small; color: grey"><%= date.strftime("%d.%m.%Y") %></span>
+        </div>
+        <% @runs.each do |run| %>
+             <% if run.datetime.strftime("%d.%m.%Y") == date.strftime("%d.%m.%Y") %>
+                <div class="col-md-2">
+                    <%= link_to "Run!", controller: "runs", action: "show", id: run.id %><br/>
+                    Distance: <%= (run.distance.to_f / 1000).round(2).to_s %> km.<br/>
+                    Duration: <%= run.duration.to_f.round(2).to_s %> min.
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-2">
+                    <div class="ddd<%= run.datetime.strftime('%d') %>"></div>
+                    <% radius = run.distance * 50 / 10000 %>
+                    <script>//Make an SVG Container
+                    var svgContainer = d3.select(".ddd<%= run.datetime.strftime('%d') %>").append("svg")
+                                            .attr("width", 150)
+                                            .attr("height", 150);
+ 
+                    //Draw the Circle
+                    var circle = svgContainer.append("circle")
+                                                .attr("cx", 60)
+                                                .attr("cy", 60)
+                                                .attr("r", <%= radius %>)
+                                                .attr("style", "fill: #E6521E");
+                    </script>
+                </div>
+            <% end %>
+        <% end %>
+        <div class="col-md-2"></div>
     </div>
-
-    <div class="col-md-3"></div>
-    <div class="col-md-5">
-    <div id='map'><script type="text/javascript">initmap(<%=@last_run[0].points%>, 'map');</script></div>
-    </div></div>
-<div class="row" style="height: 50px;"></div>
-<div class="row">
-    <div class="col-md-12">
-        <!--all former runs:
-        <% @runs.each do |run|%>
-        <li><a href="/show/<%= run %>"><%= run %></a></li>
-        <% end %>-->
-        <div id="calendar"></div>
-        <script>$(document).ready(function() {
-    // page is now ready, initialize the calendar...
-    $('#calendar').fullCalendar({
-        //header: "false",
-        height: "auto",
-        events: [<% @runs.each do |run| %>
-                 {
-                     title: "Run!",
-                     start: "<%= run.datetime.strftime("%Y-%m-%d") %>",
-                     url: "/runs/<%= run.id %>"
-                 },
-                 <% end %>],
-                 eventBackgroundColor: "#E6521E",
-                 eventClick: function(event) {
-                 if (event.url) {
-                 $.open(event.url);
-                 return false;
-                 }
-                 },
-        header: {
-                 left:   'prev',
-                 center: 'title',
-                 right:  'next'
-                 },
-        //buttonIcons: false
-                 })
-        });</script>
-    </div></div>
-
-    <% end %>
-
+    <div class="row">
+        <hr/>
+    </div>
+<%- end %>

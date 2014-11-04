@@ -1,7 +1,7 @@
 class RunsController < ApplicationController
     def index
         @last_run = Run.where(:UserID => current_user[:id]).order(datetime: :desc)
-        @runs = Run.where(:UserID => current_user[:id])
+        @runs = Run.where(:UserID => current_user[:id]).order(datetime: :desc)
     end
 
     def show

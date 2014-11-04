@@ -1,0 +1,56 @@
+    <% if @last_run[0] %>
+    <div class="col-md-4">
+        <h4>Your last run:</h4>
+ On <b><span id='last_date'><%= @last_run[0].datetime.strftime("%d.%m.%y, beginning at %k:%M") %></span></b>, you ran a distance of <b><span id='last_distance'><%= (@last_run[0].distance.to_f / 1000).round(2).to_s %></span> km.</b> in <b><span id='last_length'><%= @last_run[0].duration.to_f.round(2).to_s %></span> min.</b> That makes for an average speed of <b><span id='last_geschdurchschnitt'><%= @last_run[0].velocity_average.to_f.round(2).to_s %></span> km/h</b> and an average pace of <b><span id='last_pacedurchschnitt'><%= @last_run[0].pace_average.to_f.round(2).to_s %></span> min/km.</b><br/><br/>
+    </div>
+
+<div class="row">
+
+
+    <div class="col-md-3"></div>
+    <div class="col-md-5">
+    <div id='map'><script type="text/javascript">initmap(<%=@last_run[0].points%>, 'map');</script></div>
+    </div></div>
+<div class="row" style="height: 50px;"></div>
+
+
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        <!--all former runs:
+        <% @runs.each do |run|%>
+        <li><a href="/show/<%= run %>"><%= run %></a></li>
+        <% end %>-->
+        <div id="calendar"></div>
+        <script>$(document).ready(function() {
+    // page is now ready, initialize the calendar...
+    $('#calendar').fullCalendar({
+        //header: "false",
+        height: "auto",
+        events: [<% @runs.each do |run| %>
+                 {
+                     title: "Run!",
+                     start: "<%= run.datetime.strftime("%Y-%m-%d") %>",
+                     url: "/runs/<%= run.id %>"
+                 },
+                 <% end %>],
+                 eventBackgroundColor: "#E6521E",
+                 eventClick: function(event) {
+                 if (event.url) {
+                 $.open(event.url);
+                 return false;
+                 }
+                 },
+        header: {
+                 left:   'prev',
+                 center: 'title',
+                 right:  'next'
+                 },
+        //buttonIcons: false
+                 })
+        });</script>
+    </div></div>
+
+    <% end %>
