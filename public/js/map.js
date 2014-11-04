@@ -1,6 +1,6 @@
-function initmap(points) {
+function initmap(points, container) {
 	// set up the map
-	map = new L.Map('map');
+	map = new L.Map(container);
 
 	// create the tile layer with correct attribution
 	var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';

@@ -3,23 +3,35 @@ class GpxController < ApplicationController
     end
     
     def create
-        parse_result = parse(params[:file])
-        session[:time] = parse_result[:time]
-        session[:distance] = parse_result[:distance]
-        session[:duration] = parse_result[:duration]
-        session[:velocity_average] = parse_result[:velocity_average]
-        session[:pace_average] = parse_result[:pace_average]
-        session[:points] = parse_result[:points]
-        redirect_to controller: "runs" , action: "new"
-        #render html: "<strong>Done!</strong> <a href='/runs'>Show all Runs.</a>".html_safe
+        if params[:file]
+            if File.extname(params[:file].original_filename) == ".gpx"
+                parse_result = parse(params[:file])
+                session[:datetime] = parse_result[:datetime]
+                session[:distance] = parse_result[:distance]
+                session[:duration] = parse_result[:duration]
+                session[:velocity_average] = parse_result[:velocity_average]
+                session[:pace_average] = parse_result[:pace_average]
+                session[:points] = parse_result[:points]
+                redirect_to controller: "runs" , action: "new"
+                #render html: "<strong>Done!</strong> <a href='/runs'>Show all Runs.</a>".html_safe
+            else
+                flash[:error] = "Chosen File was no .gpx-file"
+                redirect_to controller: "gpx" , action: "new"
+            end
+        else
+            flash[:error] = "No .gpx-file chosen"
+            redirect_to controller: "gpx" , action: "new"
+        end
     end
 
     def dateUmsetzung (date)
         date_tag = date[8..9]
         date_monat = date[5..6]
         date_jahr = date[0..3]
-        date_uhrzeit = date[11..18]
-        return [date_tag, date_monat, date_jahr, date_uhrzeit]
+        date_uhrzeit = Time.parse(date[11..18])
+        #date_ges = {"day" => date_tag, "month" => date_monat, "year" => date_jahr}
+        date_ges = Date.parse(date_tag + "." + date_monat + "." + date_jahr)
+        return [date_ges, date_uhrzeit]
     end
 
     def haversine (eins, zwei)
@@ -90,8 +102,7 @@ class GpxController < ApplicationController
         gpx = Nokogiri::XML(open(gpx_file))
         #hole den Dateinamen, das Datum, berechne die Distanz, die Dauer
         #filename = File.basename gpx_file
-        #date_umgesetzt = dateUmsetzung(gpx.css("name")[0].text)
-        time = gpx.css("name")[0].text
+        datetime = Time.parse(gpx.css("name")[0].text)
         points = getAllPoints(gpx.css("trkseg"))
         distance = calculateDistance(points)
         time_difference = getDauer(gpx.css("trkseg"))
@@ -101,7 +112,7 @@ class GpxController < ApplicationController
 #date_umgesetzt[2] + date_umgesetzt[1] + date_umgesetzt[0] - , :time => date_umgesetzt[3]
 
         #Run.create({:time => time, :distance => distance, :duration => time_difference, :velocity_average => gesch_durchschnitt, :pace_average => pace_durchschnitt, :points => points})
-        return {:time => time, :distance => distance, :duration => time_difference, :velocity_average => gesch_durchschnitt, :pace_average => pace_durchschnitt, :points => points}
+        return {:datetime => datetime, :distance => distance, :duration => time_difference, :velocity_average => gesch_durchschnitt, :pace_average => pace_durchschnitt, :points => points}
         
     end
     

@@ -1,0 +1,13 @@
+<div class="row">
+    <div class="col-md-7">
+        <%= @track.name %><br/>
+        <%= @track.distance %><br/>
+        <%= @track.note %><br/>
+    </div>
+    <div class="col-md-5">
+        <div id='map' style="height:300px; width:400px"><script type="text/javascript">initmap(<%=@track.points%>, 'map');</script></div>
+    </div>
+</div>
+<% session[:points] = @track.points %>
+<% session[:distance] = @track.distance %>
+<%= link_to "New Run", controller: "runs", action: "new" %>

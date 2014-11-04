@@ -125,7 +125,7 @@ function drawChartLine (data, place) {
 			// do this AFTER the axes above so that the line is above the tick-lines
   			graph.append("svg:path").attr("d", line(dataset));
 }*/
-
+//$(document).ready(function() {
 function highchart (speeds, distances, paces, place) {
     //console.log(data);
     $(place).highcharts({
@@ -205,3 +205,4 @@ function devideData (data_ges) {
     data.push(data_bezeichnungen);
     return data;
 }
+

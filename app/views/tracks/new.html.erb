@@ -1,0 +1,21 @@
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-3">
+    
+        <%= form_for @track do |f| %></div>
+  <div><%= f.label :name %><%= f.text_field :name%></div>
+  <div><%= f.label :distance %><%= f.text_field :distance, :value => session[:distance].to_f.round(2).to_s, class: "distance_input" %></div>
+  <div><%= f.label :note%><%= f.text_field :note%></div>
+  <%= f.submit "Create Track" %>
+  <% end %>
+    
+    </div>
+    <div class="col-md-5">
+    <div id='map'><script type="text/javascript">initmap(<%=session[:points]%>);</script></div>
+    </div></div>
+<div class="row" style="height: 50px;"></div>
+<div class="row">
+    
+    </div>
+</div>
+

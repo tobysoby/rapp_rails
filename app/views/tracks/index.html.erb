@@ -1,0 +1,15 @@
+<div class="row">
+    These are your saved Tracks:
+</div>
+<% @tracks.each_with_index do |track, index| %>
+    <div class="row">
+        <div class="col-md-7">
+            <%= link_to track.name, controller: "tracks", action: "show", id: track.id %><br/>
+            <%= track.distance %><br/>
+            <%= track.note %><br/>
+        </div>
+        <div class="col-md-5">
+            <div id='map<%= index.to_s %>' style="height:300px; width:400px"><script type="text/javascript">initmap(<%=track.points%>, 'map<%= index.to_s %>');</script></div>
+        </div>
+    </div>
+<% end %>

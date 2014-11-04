@@ -54,16 +54,16 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 
-    root "runs#index"
+    root "sessions#new"
 
     resources :users
-    match '/signup',  to: 'users#new',            via: 'get'
-    match '/signin',  to: 'sessions#new',         via: 'get'
-    match '/signout', to: 'sessions#destroy',     via: 'delete'
-
     resources :sessions, only: [:new, :create, :destroy]
+    match '/signup',  to: 'users#new',            via: 'get'
+    match '/login',  to: 'sessions#new',         via: 'get'
+    match '/logout',  to: 'sessions#destroy',     via: 'delete'
 
     resources :runs
+    resources :tracks
 
     get 'gpx' => 'gpx#new'
     post 'gpx' => 'gpx#create'

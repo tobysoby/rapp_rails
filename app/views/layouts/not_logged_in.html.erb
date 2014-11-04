@@ -40,41 +40,7 @@
 
 			<!-- Static navbar -->
 			<nav class="navbar navbar-default" role="navigation">
-			  <div class="navbar-header">
-			    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-			      <span class="sr-only">Toggle navigation</span>
-			      <span class="icon-bar"></span>
-			      <span class="icon-bar"></span>
-			      <span class="icon-bar"></span>
-			    </button>
-			    <a class="navbar-brand" href="/runs">Rapp</a>
-			  </div>
-			  <div class="navbar-collapse collapse">
-			    <ul class="nav navbar-nav">
-			      <li><a href="/runs/new">New Run</a></li>
-			      <li><a href="/statistics">Statistics</a></li>
-			    </ul>
-          		<% if logged_in? %>
-          			<ul class="nav navbar-nav navbar-right">
-            		<li><%= link_to "Users", '#' %></li>
-            		<li class="dropdown">
-              		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Account <b class="caret"></b></a>
-              		<ul class="dropdown-menu">
-                		<li><%= link_to "Profile", current_user %></li>
-                		<li><%= link_to "Settings", edit_user_path(current_user) %></li>
-                		<li class="divider"></li>
-                		<li>
-                  			<%= link_to "Sign out", logout_path, method: "delete" %>
-                		</li>
-              		</ul>
-            		</li>
-            		</ul>
-          		<% else %>
-            		<ul class="nav navbar-nav navbar-right">
-            		<li><%= link_to "Sign in", login_path %></li>
-            		</ul>
-          		<% end %>
-			  </div><!--/.nav-collapse -->
+			  
 			</nav>
 
 			<div>

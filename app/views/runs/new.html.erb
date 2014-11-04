@@ -1,18 +1,19 @@
-
 <div class="row">
 <script src="../../js/edit.js"></script>
   <div class="col-md-4">
-  <div><%= link_to "Upload a Gpx", gpx_path %> <%= form_for @run do |f| %></div>
-  <div><%= f.label :time %><%= f.text_field :time, :value => session[:time], class: "time_input"  %></div>
-  <div><%= f.label :distance %><%= f.text_field :distance, :value => session[:distance], class: "distance_input" %></div>
-  <div><%= f.label :duration %><%= f.text_field :duration, :value => session[:duration], class: "duration_input" %></div>
-  <div><%= f.label :velocity_average, "Velocity" %><%= f.text_field :velocity_average, :value => session[:velocity_average], class: "velocity_input" %></div>
-  <div><%= f.label :pace_average, "Pace" %><%= f.text_field :pace_average, :value => session[:pace_average], class: "pace_input" %></div>
-  <div><%= f.label :note%><%= f.text_field :note%></div>
-  <div><%= f.label :feeling%><%= f.text_field :feeling%></div>
-  <%= f.submit "Create Run" %>
-  <% end %>
+  <div><%= link_to "Upload a Gpx", gpx_path %><br/>
+      <%= link_to "Choose a Track", tracks_path %>
+      <%= form_for @run do |f| %></div>
+        <div><%= f.label :datetime %><%= f.datetime_select :datetime, { :default => session[:datetime]}, class: "datetime_input"  %></div>
+        <div><%= f.label :distance %><%= f.text_field :distance, :value => session[:distance].to_f.round(2).to_s, class: "distance_input" %></div>
+        <div><%= f.label :duration %><%= f.text_field :duration, :value => session[:duration], class: "duration_input" %></div>
+        <div><%= f.label :velocity_average, "Velocity" %><%= f.text_field :velocity_average, :value => session[:velocity_average].to_f.round(2).to_s, class: "velocity_input" %></div>
+        <div><%= f.label :pace_average, "Pace" %><%= f.text_field :pace_average, :value => session[:pace_average].to_f.round(2).to_s, class: "pace_input" %></div>
+        <div><%= f.label :note%><%= f.text_field :note%></div>
+        <div><%= f.label :feeling%><%= f.text_field :feeling%></div>
+        <%= f.submit "Create Run" %>
+      <% end %>
   </div>
   <div class="col-md-1"></div>
-  <div class="col-md-5"><div id='map'><script type="text/javascript">initmap(<%=session[:points]%>);</script></div></div>
+  <div class="col-md-5"><div id='map'><script type="text/javascript">initmap(<%=session[:points]%>, 'map');</script></div></div>
 </div>

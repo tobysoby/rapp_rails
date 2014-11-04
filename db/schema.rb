@@ -11,10 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141012212052) do
+ActiveRecord::Schema.define(version: 20141103133944) do
 
   create_table "runs", force: true do |t|
-    t.string   "time"
+    t.datetime "datetime"
     t.float    "distance"
     t.float    "duration"
     t.float    "velocity_average"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20141012212052) do
     t.string   "point_time"
     t.string   "note"
     t.string   "feeling"
+    t.integer  "UserID"
   end
 
   create_table "sessions", force: true do |t|
@@ -36,6 +37,15 @@ ActiveRecord::Schema.define(version: 20141012212052) do
 
   add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true
   add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at"
+
+  create_table "tracks", force: true do |t|
+    t.string   "name"
+    t.string   "points"
+    t.string   "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "distance"
+  end
 
   create_table "users", force: true do |t|
     t.string   "name"
