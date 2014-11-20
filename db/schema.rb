@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141104141237) do
+ActiveRecord::Schema.define(version: 20141120221857) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 20141104141237) do
 
   create_table "tracks", force: true do |t|
     t.string   "name"
-    t.string   "points"
+    t.text     "points"
     t.string   "note"
     t.datetime "created_at"
     t.datetime "updated_at"
