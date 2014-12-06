@@ -32,7 +32,7 @@
     This year, you already have run <b><%= (@total_distance.to_f / 1000).round(2).to_s %> km</b>. For this you spent a total of <b><%= @total_time.to_f.round(2).to_s %> min.</b> outside.
 </div>
 <div class="row">
-    Last week, you have run <b><%= @last_week_distance.round(2).to_s %> km</b>. For this you spent a total of <b><%= @last_week_time.round(2).to_s %> min.</b> outside.
+    Last week, you have run <b><%= (@last_week_distance / 1000).round(2).to_s %> km</b>. For this you spent a total of <b><%= @last_week_time.round(2).to_s %> min.</b> outside.
 </div><br/>
 <div class="row">
     Your best speed was <b><%= @best_speed[0].velocity_average.round(2).to_s %> km/h</b> on <%= @best_speed[0].datetime.strftime("%d.%m.%y") %>.<br/>
@@ -41,15 +41,15 @@
 </div><br/>
 
 <div class="row">
-    This shows the different average speeds of your last runs:
-    <div id="highchart"></div>
+    This shows the different average speeds of your last 10 runs:
+    <div id="highchart10"></div>
 </div>
 <!--<script src="http://d3js.org/d3.v3.min.js"></script>-->
     <script src="/js/statistics.js"></script>
 <script>
-    console.log(<%= @last_distances %>);
+    console.log("<%= @last_dates %>");
 //drawChart(devideData(<%= @last_distances %>), ".chart_distances");
 //drawChart(devideData(<%= @last_speeds %>), ".chart_speeds");
 //drawChartLine(devideData(<%= @last_speeds %>), ".chart_speeds_line");
-highchart(<%= @last_speeds %>, <%= @last_distances %>, <%= @last_paces %>, "#highchart");
+highchart(<%= @last_speeds10 %>, <%= @last_distances10 %>, <%= @last_paces10 %>, "#highchart10");
 </script>
