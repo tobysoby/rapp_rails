@@ -20,7 +20,7 @@ class RunsController < ApplicationController
     	hour = params[:run]["datetime(4i)"]
     	minute = params[:run]["datetime(5i)"]
     	datetime = Time.parse(day + "." + month + "." + year + " " + hour + ":" + minute)
-    	r = Run.create({:datetime => datetime, :distance => params[:run][:distance], :duration => params[:run][:duration], :velocity_average => params[:run][:velocity_average], :pace_average => params[:run][:pace_average], :points => session[:points], :UserID => current_user[:id]})
+    	r = Run.create({:datetime => datetime, :distance => params[:run][:distance], :duration => params[:run][:duration], :velocity_average => params[:run][:velocity_average], :pace_average => params[:run][:pace_average], :points => session[:points], :UserID => current_user[:id], :temperatur => params[:run][:temperatur], :wetter => params[:run][:wetter]})
     	#reset_session
         if r.save
             session[:datetime] = Time.now
@@ -29,6 +29,8 @@ class RunsController < ApplicationController
             session[:velocity_average] = ""
             session[:pace_average] = ""
             session[:points] = ""
+            session[:temperatur] = ""
+            session[:wetter] = ""
     	   redirect_to "/runs"
         else
             flash[r.errors.messages] = r.errors.messages

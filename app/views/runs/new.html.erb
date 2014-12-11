@@ -11,6 +11,8 @@
         <div><%= f.label :pace_average, "Pace" %><%= f.text_field :pace_average, :value => session[:pace_average].to_f.round(2).to_s, class: "pace_input" %></div>
         <div><%= f.label :note%><%= f.text_field :note%></div>
         <div><%= f.label :feeling%><%= f.text_field :feeling%></div>
+        <div><%= f.label :temperatur%><%= f.text_field :temperatur, :value => session[:temperatur]%></div>
+        <div><%= f.label :wetter%><%= f.text_field :wetter, :value => session[:wetter]%></div>
         <%= f.submit "Create Run" %>
       <% end %>
   </div>

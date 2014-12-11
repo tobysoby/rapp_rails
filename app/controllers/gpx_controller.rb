@@ -12,6 +12,8 @@ class GpxController < ApplicationController
                 session[:velocity_average] = parse_result[:velocity_average]
                 session[:pace_average] = parse_result[:pace_average]
                 session[:points] = parse_result[:points]
+                session[:temperatur] = parse_result[:temperatur]
+                session[:wetter] = parse_result[:wetter]
                 redirect_to controller: "runs" , action: "new"
                 #render html: "<strong>Done!</strong> <a href='/runs'>Show all Runs.</a>".html_safe
             else
@@ -108,11 +110,33 @@ class GpxController < ApplicationController
         time_difference = getDauer(gpx.css("trkseg"))
         gesch_durchschnitt = getGeschDurchschnitt(distance, time_difference)
         pace_durchschnitt = getPaceDurchschnitt(distance, time_difference)
+        latlong = gpx.css("trkpt")[0]
+        
+        #hole die historischen Wetterdaten
+        weather = Nokogiri::XML(open('http://api.worldweatheronline.com/free/v2/past-weather.ashx?key=1226bb2384684891b6657577b3f19&q=' + latlong["lat"] + ',' + latlong["lon"] + '&date=' + datetime.strftime("%Y-%m-%d")).read)
+        
+        temperatur = ""
+        wetter = ""
+
+        #Irgendwie das korrekte 3-Stunden-Interval herausbekommen.
+        weather.css("hourly").each do |hour|
+            time = hour.css("time").text
+            p time
+            p datetime.strftime("%k%I")
+            p (datetime.strftime("%k%I").to_f - time.to_f)
+            if (datetime.strftime("%k%I").to_f - time.to_f) < 300
+                temperatur = hour.css("tempC")[0].text
+                p temperatur
+                wetter = hour.css("weatherDesc")[0].text
+                p wetter
+                break
+            end
+        end
         
 #date_umgesetzt[2] + date_umgesetzt[1] + date_umgesetzt[0] - , :time => date_umgesetzt[3]
 
         #Run.create({:time => time, :distance => distance, :duration => time_difference, :velocity_average => gesch_durchschnitt, :pace_average => pace_durchschnitt, :points => points})
-        return {:datetime => datetime, :distance => distance, :duration => time_difference, :velocity_average => gesch_durchschnitt, :pace_average => pace_durchschnitt, :points => points}
+        return {:datetime => datetime, :distance => distance, :duration => time_difference, :velocity_average => gesch_durchschnitt, :pace_average => pace_durchschnitt, :points => points, :temperatur => temperatur, :wetter => wetter}
         
     end
     
