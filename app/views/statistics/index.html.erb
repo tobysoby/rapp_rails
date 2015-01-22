@@ -44,6 +44,18 @@
     This shows the different average speeds of your last 10 runs:
     <div id="highchart10"></div>
 </div>
+
+<div class="row">
+    <div id="highchart_paces"></div>
+</div>
+
+<div class="row">
+    <div id="highchart_distances"></div>
+</div>
+
+<div class="row">
+    <div id="highchart_speeds"></div>
+</div>
 <!--<script src="http://d3js.org/d3.v3.min.js"></script>-->
     <script src="/js/statistics.js"></script>
 <script>
@@ -51,5 +63,8 @@
 //drawChart(devideData(<%= @last_distances %>), ".chart_distances");
 //drawChart(devideData(<%= @last_speeds %>), ".chart_speeds");
 //drawChartLine(devideData(<%= @last_speeds %>), ".chart_speeds_line");
-highchart(<%= @last_speeds10 %>, <%= @last_distances10 %>, <%= @last_paces10 %>, "#highchart10");
+//highchart(<%= @last_speeds10 %>, <%= @last_distances10 %>, <%= @last_paces10 %>, "#highchart10");
+highchart("pace", <%= @last_paces %>, "#highchart_paces", "<%= @last_dates %>");
+highchart("distance", <%= @last_distances %>, "#highchart_distances", "<%= @last_dates %>");
+highchart("speed", <%= @last_speeds %>, "#highchart_speeds", "<%= @last_dates %>");
 </script>

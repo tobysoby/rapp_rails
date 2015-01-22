@@ -14,18 +14,26 @@ class StatisticsController < ApplicationController
         @last_dates = []
         last_da = Run.where(:UserID => current_user[:id]).order(datetime: :desc).pluck(:datetime)
         last_da.each do |la|
-            @last_dates.push la.strftime('%d.%m.%Y')
+            @last_dates.push la.strftime("%d.%m.")
         end
         @last_dates.reverse!
 
         @last_distances10 = []
-    	last_di = Run.where(:UserID => current_user[:id]).order(datetime: :desc).limit(10).pluck(:distance)
+        @last_distances = []
+        last_di = Run.where(:UserID => current_user[:id]).order(datetime: :desc).limit(10).pluck(:distance)
         last_di.each do |di|
             @last_distances10.push di/1000
         end
         @last_distances10.reverse!
-    	@last_speeds10 = Run.where(:UserID => current_user[:id]).order(datetime: :desc).limit(10).pluck(:velocity_average).reverse!
-    	@last_paces10 = Run.where(:UserID => current_user[:id]).order(datetime: :desc).limit(10).pluck(:pace_average).reverse!
+        last_di = Run.where(:UserID => current_user[:id]).order(datetime: :desc).pluck(:distance)
+        last_di.each do |di|
+            @last_distances.push (di/1000).round(2)
+        end
+        @last_distances.reverse!
+        @last_speeds10 = Run.where(:UserID => current_user[:id]).order(datetime: :desc).limit(10).pluck(:velocity_average).reverse!
+        @last_speeds = Run.where(:UserID => current_user[:id]).order(datetime: :desc).pluck(:velocity_average).reverse!
+        @last_paces10 = Run.where(:UserID => current_user[:id]).order(datetime: :desc).limit(10).pluck(:pace_average).reverse!
+        @last_paces = Run.where(:UserID => current_user[:id]).order(datetime: :desc).pluck(:pace_average).reverse!
 	end
 
 end
